@@ -1,0 +1,50 @@
+.name {
+  text-transform: capitalize;
+  font-weight: normal;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+  padding: 0;
+  margin: 0;
+}
+.side {
+  width: 50%;
+  float: left;
+}
+.svg {
+  width: 50%;
+  margin-left: 30%;
+  margin-top: 15vh;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.form {
+  margin-top: 5vh;
+}
+.button {
+  float: right;
+  margin-top: 10px;
+}
+.wrap {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15vh;
+}
+/*headings*/
+.title {
+  font-size: 15px;
+  text-transform: uppercase;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+.subtitle {
+  font-weight: normal;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+}
