@@ -9,7 +9,13 @@ export const getUsersAction = (data, history) => async (dispatch) => {
   try {
     dispatch(getUsers());
     const res = await axios.get(
-      `https://mago-challenge-backend.herokuapp.com/api/subscribed/get`
+      `https://mago-challenge-backend.herokuapp.com/api/subscribed/get`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
     dispatch(getUsersSuccess(res.data.data));
   } catch (err) {
