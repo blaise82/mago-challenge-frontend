@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Menu from "./components/Menu";
 import Home from "./views/Home";
 import SendMessage from "./views/SendMessage";
+import SendBulk from "./views/SendBulk";
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/send-single" exact component={SendMessage} />
+          <Route path="/send-bulk" exact component={SendBulk} />
         </Switch>
       </Router>
     );
