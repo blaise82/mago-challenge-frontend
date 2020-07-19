@@ -4,7 +4,10 @@ import TextField from "@material-ui/core/TextField";
 import styles from "../styles/send.module.css";
 import Svg from "../svg/send1.svg";
 import Button from "@material-ui/core/Button";
-import { sendMessageAction, closeMessage } from "../redux/actions/sendAction";
+import {
+  sendBulkMessageAction,
+  closeMessage,
+} from "../redux/actions/bulkAction";
 import { connect } from "react-redux";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,9 +21,25 @@ class SendBulk extends Component {
       message: "",
       messageError: "",
       messageStatus: false,
+      phones: [],
     };
   }
-
+  componentDidMount() {
+    const users = this.props.usersState;
+    const phones = [];
+    console.log(users.data);
+    if (users.data.length >= 1) {
+      const data = users.data;
+      console.log(data);
+      data.filter(function (item) {
+        console.log("item", item);
+        phones.push(item.phone);
+      });
+      this.setState({
+        phones: phones,
+      });
+    }
+  }
   change = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -57,13 +76,14 @@ class SendBulk extends Component {
     if (!error) {
       const send = {
         messageBody: this.state.message,
-        to: this.state.phone,
+        numberList: this.state.phones,
       };
-      await this.props.sendMessageAction(send, this.props.history);
+      await this.props.sendBulkMessageAction(send, this.props.history);
     }
   };
 
   render() {
+    console.log("state here", this.state.phones);
     return (
       <div>
         <div className={styles.side}>
@@ -103,7 +123,7 @@ class SendBulk extends Component {
                 color="secondary"
                 disableElevation
               >
-                {this.props.sendSingleState.loading === "block" ? (
+                {this.props.sendBulkState.loading === "block" ? (
                   <div className={styles.progress}>
                     <CircularProgress size={24} color="#4b7ba0" />
                   </div>
@@ -119,14 +139,14 @@ class SendBulk extends Component {
             vertical: "bottom",
             horizontal: "right",
           }}
-          open={this.props.sendSingleState.open}
+          open={this.props.sendBulkState.open}
           autoHideDuration={6000}
           onClose={this.handleClose}
           ContentProps={{
             "aria-describedby": "message-id",
           }}
           message={
-            <span id="message-id">{this.props.sendSingleState.error}</span>
+            <span id="message-id">{this.props.sendBulkState.error}</span>
           }
           action={[
             <IconButton
@@ -145,14 +165,15 @@ class SendBulk extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    sendSingleState: state.sendSingle,
+    sendBulkState: state.sendBulk,
+    usersState: state.users,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sendMessageAction: (data, history) =>
-      dispatch(sendMessageAction(data, history)),
+    sendBulkMessageAction: (data, history) =>
+      dispatch(sendBulkMessageAction(data, history)),
     closeMessage: () => dispatch(closeMessage()),
   };
 };

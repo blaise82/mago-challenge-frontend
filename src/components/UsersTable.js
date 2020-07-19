@@ -52,6 +52,27 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     opacity: "0.79",
   },
+  pending: {
+    textTransform: "uppercase",
+    color: "white",
+    background: "#FEC400",
+    border: "none",
+    opacity: "0.79",
+  },
+  rejected: {
+    textTransform: "uppercase",
+    color: "white",
+    background: "#F12B2C",
+    border: "none",
+    opacity: "0.79",
+  },
+  approved: {
+    textTransform: "uppercase",
+    color: "white",
+    background: "#29CC97",
+    border: "none",
+    opacity: "0.79",
+  },
   progress: {
     position: "absolute",
     marginRight: "auto",
@@ -107,6 +128,7 @@ const UsersTable = () => {
             <TableCell align="center">User Id</TableCell>
             <TableCell align="center">Names</TableCell>
             <TableCell align="center">Phone</TableCell>
+            <TableCell align="center">Country</TableCell>
             <TableCell align="center">Livestock</TableCell>
             <TableCell align="center">Points</TableCell>
             <TableCell align="center">Send</TableCell>
@@ -127,10 +149,32 @@ const UsersTable = () => {
                   {row.phone}
                 </TableCell>
                 <TableCell align="center" component="th" scope="row">
+                  {row.FromCountry}
+                </TableCell>
+                <TableCell align="center" component="th" scope="row">
                   {row.type}
                 </TableCell>
                 <TableCell align="center" component="th" scope="row">
-                  {row.points}
+                  {console.log(parseInt(row.points) <= 500)}
+                  {parseInt(row.points) >= 250 && parseInt(row.points) <= 500 ? (
+                    <Chip
+                      className={classes.pending}
+                      label={row.points}
+                      variant="outlined"
+                    />
+                  ) : parseInt(row.points) >= 500 ? (
+                    <Chip
+                      className={classes.approved}
+                      label={row.points}
+                      variant="outlined"
+                    />
+                  ) : (
+                    <Chip
+                      className={classes.rejected}
+                      label={row.points}
+                      variant="outlined"
+                    />
+                  )}
                 </TableCell>
                 <TableCell align="center" component="th" scope="row">
                   <Link
