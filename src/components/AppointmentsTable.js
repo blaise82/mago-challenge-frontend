@@ -82,8 +82,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UsersTable = () => {
-  const users = useSelector((state) => state.users);
+const AppointmentTable = () => {
+  const users = useSelector((state) => state.appointment);
   let rows = {};
   try {
     if (users.loading == "none") {
@@ -118,17 +118,15 @@ const UsersTable = () => {
           id="tableTitle"
           component="div"
         >
-          All Subscribed Farmers
+          All appointments
         </Typography>
       </Toolbar>
       <Table className={classes.table} aria-label="caption table">
         <TableHead>
           <TableRow>
-            <TableCell align="center">Names</TableCell>
+            <TableCell align="center">Appointment Id</TableCell>
             <TableCell align="center">Phone</TableCell>
-            <TableCell align="center">Country</TableCell>
-            <TableCell align="center">Livestock</TableCell>
-            <TableCell align="center">Points</TableCell>
+            <TableCell align="center">Status</TableCell>
             <TableCell align="center">Send</TableCell>
           </TableRow>
         </TableHead>
@@ -139,35 +137,28 @@ const UsersTable = () => {
               : rows
             ).map((row) => (
               <TableRow key={row.id} hover style={{ cursor: "pointer" }}>
-                <TableCell align="center" component="th" scope="row">
-                  {row.names}
-                </TableCell>
+                <TableCell align="center">{row.id}</TableCell>
+
                 <TableCell align="center" component="th" scope="row">
                   {row.phone}
                 </TableCell>
                 <TableCell align="center" component="th" scope="row">
-                  {row.FromCountry}
-                </TableCell>
-                <TableCell align="center" component="th" scope="row">
-                  {row.type}
-                </TableCell>
-                <TableCell align="center" component="th" scope="row">
-                  {parseInt(row.points) >= 250 && parseInt(row.points) <= 500 ? (
+                  {row.status == "pending" ? (
                     <Chip
                       className={classes.pending}
-                      label={row.points}
+                      label={row.status}
                       variant="outlined"
                     />
-                  ) : parseInt(row.points) >= 500 ? (
+                  ) : row.status == "approved" ? (
                     <Chip
                       className={classes.approved}
-                      label={row.points}
+                      label={row.status}
                       variant="outlined"
                     />
                   ) : (
                     <Chip
                       className={classes.rejected}
-                      label={row.points}
+                      label={row.status}
                       variant="outlined"
                     />
                   )}
@@ -177,7 +168,10 @@ const UsersTable = () => {
                     className={classes.link}
                     to={{
                       pathname: "/send-single",
-                      state: { phone: row.phone, names: row.names },
+                      state: {
+                        phone: row.phone,
+                        names: row.names || "No Name",
+                      },
                     }}
                   >
                     <Button
@@ -205,7 +199,7 @@ const UsersTable = () => {
           ) : (
             <TableRow>
               <TableCell colspan="6" align="center">
-                There is not subscribed user yet
+                There is not appointment found
               </TableCell>
             </TableRow>
           )}
@@ -224,4 +218,4 @@ const UsersTable = () => {
   );
 };
 
-export default UsersTable;
+export default AppointmentTable;

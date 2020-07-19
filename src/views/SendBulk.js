@@ -27,12 +27,9 @@ class SendBulk extends Component {
   componentDidMount() {
     const users = this.props.usersState;
     const phones = [];
-    console.log(users.data);
     if (users.data.length >= 1) {
       const data = users.data;
-      console.log(data);
       data.filter(function (item) {
-        console.log("item", item);
         phones.push(item.phone);
       });
       this.setState({
@@ -83,7 +80,6 @@ class SendBulk extends Component {
   };
 
   render() {
-    console.log("state here", this.state.phones);
     return (
       <div>
         <div className={styles.side}>
